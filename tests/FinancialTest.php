@@ -17,24 +17,24 @@ class FinancialTest extends TestCase
     public function PMT()
     {
         $test = Financial::PMT(0.1, 1,'1', 0);
-        self::assertEquals('-1.1000000000', $test);
+        self::assertEquals('-1.10000000000000', $test);
 
         $test = Financial::PMT(0, 100,'1', 0);
 
-        self::assertSame('-0.0100000000', $test);
+        self::assertSame('-0.01000000000000', $test);
 
         $test = Financial::PMT(-10, 100,'1', 0);
-        self::assertSame('9.9999999999', $test);
+        self::assertSame('9.99999999999999', $test);
 
 
         $test = Financial::PMT(-1, 100,'1', 0);
-        self::assertSame('0.0000000000', $test);
+        self::assertSame('0.00000000000000', $test);
 
         $test = Financial::PMT(-0.99, 100,'1', 0);
-        self::assertSame('0.0000000000', $test);
+        self::assertSame('0.00000000000000', $test);
 
         $test = Financial::PMT(-0.55, 100,'10', 10);
-        self::assertSame('-5.5000000002', $test);
+        self::assertSame('-5.50000000000002', $test);
     }
 
     /**
@@ -54,7 +54,7 @@ class FinancialTest extends TestCase
     public function PPMT()
     {
         $test = Financial::PPMT('5', 1, 12, '12');
-        self::assertSame('-2.7500000499003E-8', $test);
+        self::assertSame('-2.7563608284709E-8', $test);
 
         $test = Financial::PPMT('5.0', -10, 12, '12');
         self::assertSame(null, $test);

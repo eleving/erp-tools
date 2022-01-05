@@ -8,7 +8,7 @@ class Financial
 {
     const FINANCIAL_ACCURACY       = 1.0e-6;
     const FINANCIAL_MAX_ITERATIONS = 100;
-    protected const SCALE = 10;
+    protected const SCALE = 14;
 
     private static $isInitialized = false;
 
@@ -32,7 +32,7 @@ class Financial
      * @param float   $rate is the interest rate per period.
      * @param integer $nper is the total number of periods.
      *
-     * @return float  the present value interest factor
+     * @return string  the present value interest factor
      */
     private static function PVIF(float $rate, int $nper): string
     {
