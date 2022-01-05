@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Test\Common\Tool;
 
@@ -15,25 +16,25 @@ class FinancialTest extends TestCase
      */
     public function PMT()
     {
-        $test = Financial::PMT(0.1, 1,1, 0);
-        self::assertEquals('-1.1', $test);
+        $test = Financial::PMT(0.1, 1,'1', 0);
+        self::assertEquals('-1.1000000000', $test);
 
-        $test = Financial::PMT(0, 100,1, 0);
+        $test = Financial::PMT(0, 100,'1', 0);
 
-        self::assertSame(-0.01, $test);
+        self::assertSame('-0.0100000000', $test);
 
-        $test = Financial::PMT(-10, 100,1, 0);
-        self::assertSame(10., $test);
+        $test = Financial::PMT(-10, 100,'1', 0);
+        self::assertSame('9.9999999999', $test);
 
 
-        $test = Financial::PMT(-1, 100,1, 0);
-        self::assertSame(0., $test);
+        $test = Financial::PMT(-1, 100,'1', 0);
+        self::assertSame('0.0000000000', $test);
 
-        $test = Financial::PMT(-0.99, 100,1, 0);
-        self::assertSame(0., $test);
+        $test = Financial::PMT(-0.99, 100,'1', 0);
+        self::assertSame('0.0000000000', $test);
 
-        $test = Financial::PMT(-0.55, 100,10, 10);
-        self::assertSame(-5.5, $test);
+        $test = Financial::PMT(-0.55, 100,'10', 10);
+        self::assertSame('-5.5000000002', $test);
     }
 
     /**
@@ -41,10 +42,10 @@ class FinancialTest extends TestCase
      */
     public function IPMT()
     {
-        $test = Financial::IPMT(5.0, 1, 12, 12);
-        self::assertSame(-60.0, $test);
+        $test = Financial::IPMT('5.0', 1, 12, '12');
+        self::assertSame('-60', $test);
 
-        $test = Financial::IPMT(5.0, 0, 12, 12);
+        $test = Financial::IPMT('5.0', 0, 12, '12');
         self::assertSame(null, $test);
     }
     /**
@@ -52,10 +53,10 @@ class FinancialTest extends TestCase
      */
     public function PPMT()
     {
-        $test = Financial::PPMT(5.0, 1, 12, 12);
-        self::assertSame(-2.7563622495563322E-8, $test);
+        $test = Financial::PPMT('5', 1, 12, '12');
+        self::assertSame('-2.7500000499003E-8', $test);
 
-        $test = Financial::PPMT(5.0, -10, 12, 12);
+        $test = Financial::PPMT('5.0', -10, 12, '12');
         self::assertSame(null, $test);
     }
 }

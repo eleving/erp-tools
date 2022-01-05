@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Tool;
 
 /**
@@ -10,15 +12,6 @@ class NumberTool
     protected const SCALE = 10;
 
     /**
-     * Convert numeric variable to string with right formatting
-     * @param mixed $s
-     * @return string
-     */
-    private static function f($s)
-    {
-        return sprintf('%.' . self::SCALE . 'f', $s);
-    }
-    /**
      * Performs addition
      * NumberTool::add('2.71', '3.18') //5.89
      * @param string $op1
@@ -26,7 +19,7 @@ class NumberTool
      * @param boolean $round
      * @return string
      */
-    public static function add($op1, $op2, $round = true)
+    public static function add(string $op1, string $op2, bool $round = true): string
     {
         $res = bcadd(self::f($op1), self::f($op2), self::SCALE);
         return $round ? self::round($res) : $res;
@@ -40,7 +33,7 @@ class NumberTool
      * @param boolean $round
      * @return string
      */
-    public static function sub($op1, $op2, $round = true)
+    public static function sub(string $op1, string $op2, bool $round = true): string
     {
         $res = bcsub(self::f($op1), self::f($op2), self::SCALE);
         return $round ? self::round($res) : $res;
@@ -54,7 +47,7 @@ class NumberTool
      * @param boolean $round
      * @return string
      */
-    public static function mul($op1, $op2, $round = true)
+    public static function mul(string $op1, string $op2, bool $round = true): string
     {
         $res = bcmul(self::f($op1), self::f($op2), self::SCALE);
         return $round ? self::round($res) : $res;
@@ -68,7 +61,7 @@ class NumberTool
      * @param boolean $round
      * @return string
      */
-    public static function div($op1, $op2, $round = true)
+    public static function div(string $op1, string $op2, bool $round = true): string
     {
         $res = bcdiv(self::f($op1), self::f($op2), self::SCALE);
         return $round ? self::round($res) : $res;
@@ -81,7 +74,7 @@ class NumberTool
      * @param boolean $round
      * @return string|float|int
      */
-    public static function pow($left, $right, $round = true)
+    public static function pow(string $left, string $right, bool $round = true)
     {
         //bcpow does not support decimal numbers
         $res = $left ** $right;
@@ -96,7 +89,7 @@ class NumberTool
      * @param integer $precision
      * @return string
      */
-    public static function truncate($number, $precision)
+    public static function truncate(string $number, int $precision): string
     {
         $x = explode('.', $number);
         if (count($x) === 1) {
@@ -114,10 +107,10 @@ class NumberTool
      * @param string $number
      * @return string
      */
-    public static function abs($number)
+    public static function abs(string $number): string
     {
         $number = self::f($number);
-        if ($number === '') {
+        if ('' === $number) {
             return $number;
         }
 
@@ -135,7 +128,7 @@ class NumberTool
      * @param integer $precision
      * @return string
      */
-    public static function round($val, $precision = 2)
+    public static function round($val, int $precision = 2): string
     {
         return number_format(round($val, $precision), $precision, '.', '');
     }
@@ -143,11 +136,11 @@ class NumberTool
     /**
      * Formats number to decimal
      *
-     * @param string $val
+     * @param float $val
      * @param integer $precision
      * @return string
      */
-    public static function format($val, $precision = 2)
+    public static function format(float $val, int $precision = 2): string
     {
         return number_format($val, $precision, '.', '');
     }
@@ -159,7 +152,7 @@ class NumberTool
      * @param integer $precision
      * @return string
      */
-    public static function roundDown($val, $precision = 2)
+    public static function roundDown(string $val, int $precision = 2): string
     {
         if (self::isZero($val)) {
             return self::round($val, $precision);
@@ -174,7 +167,7 @@ class NumberTool
      * @param string $val
      * @return string
      */
-    public static function floor($val)
+    public static function floor(string $val): string
     {
         return self::truncate($val, 0);
     }
@@ -188,7 +181,7 @@ class NumberTool
      * @param int $precision
      * @return string
      */
-    public static function roundCustom($val, $precision = 1)
+    public static function roundCustom($val, int $precision = 1): string
     {
         return self::round($val, $precision);
     }
@@ -201,7 +194,7 @@ class NumberTool
      * @param boolean $round
      * @return string
      */
-    public static function percent($amount, $percentage, $round = true)
+    public static function percent(string $amount, string $percentage, bool $round = true): string
     {
         $res = bcmul(self::f($amount), bcdiv(self::f($percentage), '100', self::SCALE), self::SCALE);
         return $round ? self::round($res) : $res;
@@ -213,7 +206,7 @@ class NumberTool
      * @param string $percentage
      * @return string
      */
-    public static function addPercent($amount, $percentage, $round = true)
+    public static function addPercent(string $amount, string $percentage, bool $round = true): string
     {
         $res = bcadd(self::f($amount), self::percent(self::f($amount), self::f($percentage)), self::SCALE);
         return $round ? self::round($res) : $res;
@@ -225,24 +218,24 @@ class NumberTool
      * @param string $percentage
      * @return string
      */
-    public static function beforePercentAddition($result, $percentage, $round = true)
+    public static function beforePercentAddition(string $result, string $percentage, bool $round = true): string
     {
         // ($result / ($percentage + 100)) * 100;
         $res = bcmul(bcdiv($result, bcadd($percentage, '100', self::SCALE), self::SCALE), '100', self::SCALE);
         return $round ? self::round($res) : $res;
     }
 
-    public static function addVat($value, $percentage)
+    public static function addVat(string $value, string $percentage): string
     {
         return self::addPercent($value, $percentage);
     }
 
-    public static function removeVat($total, $percentage)
+    public static function removeVat(string $total, string $percentage): string
     {
         return self::beforePercentAddition($total, $percentage);
     }
 
-    public static function vatAmount($total, $percentage): string
+    public static function vatAmount(string $total, string $percentage): string
     {
         $withoutVat = self::beforePercentAddition($total, $percentage, false);
         return self::percent($withoutVat, $percentage);
@@ -250,7 +243,7 @@ class NumberTool
 
     public static function isNullOrZero($number): bool
     {
-        return $number === null || self::isZero($number);
+        return null === $number || self::isZero($number);
     }
 
     public static function isZero($number): bool
@@ -266,7 +259,7 @@ class NumberTool
      * @param boolean $round
      * @return string
      */
-    public static function addAll()
+    public static function addAll(...$args): string
     {
         $res = '0.00';
         foreach (func_get_args() as $arg) {
@@ -281,7 +274,7 @@ class NumberTool
      * @param string $right right operand
      * @return bool
      */
-    public static function gt($left, $right): bool
+    public static function gt(string $left, string $right): bool
     {
         return bccomp(self::f($left), self::f($right), self::SCALE) === 1;
     }
@@ -292,7 +285,7 @@ class NumberTool
      * @param string $right right operand
      * @return bool
      */
-    public static function gte($left, $right): bool
+    public static function gte(string $left, string $right): bool
     {
         $comp = bccomp(self::f($left), self::f($right), self::SCALE);
         return $comp === 0 || $comp === 1;
@@ -304,7 +297,7 @@ class NumberTool
      * @param string $right right operand
      * @return bool
      */
-    public static function lt($left, $right): bool
+    public static function lt(string $left, string $right): bool
     {
         return bccomp(self::f($left), self::f($right), self::SCALE) === -1;
     }
@@ -327,7 +320,7 @@ class NumberTool
      * @param string $right right operand
      * @return bool
      */
-    public static function eq($left, $right): bool
+    public static function eq(string $left, string $right): bool
     {
         return bccomp(self::f($left), self::f($right), self::SCALE) === 0;
     }
@@ -345,7 +338,7 @@ class NumberTool
      * @return float
      *   The monthly mortgage amount.
      */
-    public static function pmt($apr, $term, $loan): float
+    public static function pmt(float $apr, int $term, float $loan): string
     {
         $apr = $apr / 1200;
         $amount = $apr * -$loan * ((1 + $apr) ** $term) / (1 - ((1 + $apr) ** $term));
@@ -360,7 +353,7 @@ class NumberTool
      * @param boolean $round
      * @return float|string
      */
-    public static function calculateMedian($values, $round = true)
+    public static function calculateMedian(array $values, bool $round = true)
     {
         $count = count($values); // total numbers in array
         $middleval = floor(($count - 1) / 2); // find the middle value, or the lowest middle value
@@ -384,7 +377,7 @@ class NumberTool
      * @param boolean $round
      * @return float|string
      */
-    public static function calculateAverage($values, $round = true)
+    public static function calculateAverage(array $values, bool $round = true)
     {
         $count = count($values); // total numbers in array
 
@@ -397,7 +390,7 @@ class NumberTool
         return $round ? self::round($average) : $average;
     }
 
-    public static function numberToText($number, $locale = null)
+    public static function numberToText($number, string $locale = null)
     {
         if (!$locale) {
             $locale = 'en';
@@ -528,5 +521,15 @@ class NumberTool
         }
 
         return $string;
+    }
+
+    /**
+     * Convert numeric variable to string with right formatting
+     * @param mixed $s
+     * @return string
+     */
+    private static function f(string $s): string
+    {
+        return sprintf('%.' . self::SCALE . 'f', $s);
     }
 }

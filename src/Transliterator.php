@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Tool;
 
 /**
@@ -13,7 +15,7 @@ class Transliterator
      * @param bool $transliterateCyrillic
      * @return string
      */
-    public static function unaccent($string, $transliterateCyrillic = true)
+    public static function unaccent($string, bool $transliterateCyrillic = true): string
     {
         if ($transliterateCyrillic) {
             $cyr  = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у',

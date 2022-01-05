@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Tool;
 
 class Financial
 {
     const FINANCIAL_ACCURACY       = 1.0e-6;
     const FINANCIAL_MAX_ITERATIONS = 100;
+    protected const SCALE = 10;
 
     private static $isInitialized = false;
 
-    private static function init()
+    private static function init(): void
     {
         if (!self::$isInitialized) {
             // forces the precision for calculations
@@ -31,11 +34,11 @@ class Financial
      *
      * @return float  the present value interest factor
      */
-    private static function PVIF($rate, $nper)
+    private static function PVIF(float $rate, int $nper): string
     {
         self::init();
 
-        return ((1 + $rate) ** $nper);
+        return self::convertToString(((1 + $rate) ** $nper));
     }
 
     /**
@@ -49,44 +52,49 @@ class Financial
      * @param float   $rate is the interest rate per period.
      * @param integer $nper is the total number of periods.
      *
-     * @return float  the present value interest factor of annuities
+     * @return string  the present value interest factor of annuities
      */
-    private static function FVIFA($rate, $nper)
+    private static function FVIFA(float $rate, int $nper): string
     {
         self::init();
 
-        // Removable singularity at rate == 0
         if ($rate == 0) {
-            return $nper;
+            return strval($nper);
         }
 
-        return (((1 + $rate) ** $nper) - 1) / $rate;
+        $pow = self::convertToString(((1 + $rate) ** $nper) - 1);
+        $result = self::convertToString(floatval(bcdiv($pow, strval($rate), self::SCALE)));
+
+        return $result;
     }
 
-    /**
-     * @param $pv
-     * @param $pmt
-     * @param $rate
-     * @param $period
-     *
-     * @return mixed
-     */
-    private static function interestPart($pv, $pmt, $rate, $period)
+    private static function interestPart(string $pv, float $pmt, float $rate, int $period): float
     {
         self::init();
+        $powPart = self::convertToString((1 + $rate) ** $period);
+        $pvMultiply = bcmul($pv, bcmul($powPart, strval($rate), self::SCALE), self::SCALE);
+        $pmtMultiply = bcmul(strval($pmt), strval($powPart - 1), self::SCALE);
+        $result = bcadd($pvMultiply, $pmtMultiply, self::SCALE);
 
-        return -($pv * ((1 + $rate) ** $period) * $rate + $pmt * (((1 + $rate) ** $period) - 1));
+        return -floatval($result);
     }
 
-    public static function PMT($rate, $nper, $pv, $fv, $type = 0)
+    public static function PMT(float $rate, int $nper, string $pv, float $fv, int $type = 0): string
     {
         self::init();
 
         // Calculate the PVIF and FVIFA
         $pvif = self::PVIF($rate, $nper);
+        $pvifPart = bcsub(bcmul(strval(-$pv), $pvif, self::SCALE), strval($fv), self::SCALE);
         $fvifa = self::FVIFA($rate, $nper);
+        $fvifaPart = bcmul(
+            bcadd(strval(1.0), bcmul(strval($rate), strval($type), self::SCALE), self::SCALE),
+            $fvifa,
+            self::SCALE,
+        );
+        $pmt = bcdiv($pvifPart, $fvifaPart, self::SCALE);
 
-        return ((-$pv * $pvif - $fv) / ((1.0 + $rate * $type) * $fvifa));
+        return $pmt;
     }
 
     /**
@@ -95,25 +103,16 @@ class Financial
      * on periodic, constant payments and a constant interest rate.
      *
      * For a more complete description of the arguments in IPMT, see the PV function.
-     *
-     * @param       $rate
-     * @param       $per
-     * @param       $nper
-     * @param       $pv
-     * @param float $fv
-     * @param int   $type
-     *
-     * @return mixed|null
      */
-    public static function IPMT($rate, $per, $nper, $pv, $fv = 0.0, $type = 0)
+    public static function IPMT(string $rate, int $per, int $nper, string $pv, float $fv = 0.0, int $type = 0): ?string
     {
         self::init();
 
         if (($per < 1) || ($per >= ($nper + 1))) {
             return null;
         }
-
-        $pmt = self::PMT($rate, $nper, $pv, $fv, $type);
+        $rate = (float)$rate;
+        $pmt = (float)self::PMT($rate, $nper, $pv, $fv, $type);
 
         $ipmt = self::interestPart($pv, $pmt, $rate, $per - 1);
 
@@ -121,7 +120,7 @@ class Financial
             return null;
         }
 
-        return $ipmt;
+        return (string)$ipmt;
     }
 
     /**
@@ -129,28 +128,19 @@ class Financial
      * Returns the payment on the principal for a given period for an
      * investment based on periodic, constant payments and a constant
      * interest rate.
-     *
-     * @param       $rate
-     * @param       $per
-     * @param       $nper
-     * @param       $pv
-     * @param float $fv
-     * @param int   $type
-     *
-     * @return float|null
      */
-    public static function PPMT($rate, $per, $nper, $pv, $fv = 0.0, $type = 0)
+    public static function PPMT(string $rate, int $per, int $nper, string $pv, float $fv = 0.0, int $type = 0): ?string
     {
         self::init();
 
         if (($per < 1) || ($per >= ($nper + 1))) {
             return null;
         }
-
-        $pmt = self::PMT($rate, $nper, $pv, $fv, $type);
+        $rate = (float)$rate;
+        $pmt = (float)self::PMT($rate, $nper, $pv, $fv, $type);
         $ipmt = self::interestPart($pv, $pmt, $rate, $per - 1);
 
-        return ((is_finite($pmt) && is_finite($ipmt)) ? $pmt - $ipmt : null);
+        return ((is_finite($pmt) && is_finite($ipmt)) ? strval($pmt - $ipmt) : null);
     }
 
 
@@ -165,22 +155,14 @@ class Financial
      *       i=1 |            i   |
      *            \  (1 + rate)  /
      *
-     * @param float   $rate
-     * @param float[] $values
-     *
-     * @return float|int|null
      */
-    private static function NPV($rate, $values)
+    private static function NPV(float $rate, array $values): ?float
     {
         self::init();
 
-        if (!is_array($values)) {
-            return null;
-        }
-
         $npv = 0.0;
         foreach ($values as $i => $iValue) {
-            $npv += $iValue / ((1 + $rate) ** ($i + 1));
+            $npv += floatval(bcdiv(strval($iValue), self::convertToString((1 + $rate) ** ($i + 1)), self::SCALE));
         }
 
         return (is_finite($npv) ? $npv : null);
@@ -195,19 +177,10 @@ class Financial
      * annually. The internal rate of return is the interest rate
      * received for an investment consisting of payments (negative
      * values) and income (positive values) that occur at regular periods.
-     *
-     * @param float[] $values
-     * @param float   $guess
-     *
-     * @return float|null
      */
-    public static function IRR($values, $guess = 0.1)
+    public static function IRR(array $values, float $guess = 0.1): ?float
     {
         self::init();
-
-        if (!is_array($values)) {
-            return null;
-        }
 
         // create an initial bracket, with a root somewhere between bot and top
         $x1 = 0.0;
@@ -252,14 +225,7 @@ class Financial
         return null;
     }
 
-    /**
-     * @param float[] $values
-     * @param int[]   $timestamps
-     * @param float   $guess
-     *
-     * @return float|null
-     */
-    public static function XIRR($values, $timestamps, $guess = 0.1)
+    public static function XIRR(array $values, array $timestamps, float $guess = 0.1): ?float
     {
         self::init();
 
@@ -322,7 +288,7 @@ class Financial
     }
 
     // Calculates the resulting amount
-    private static function irrResult($values, $dates, $rate)
+    private static function irrResult(array $values, array $dates, float $rate): float
     {
         self::init();
 
@@ -336,7 +302,7 @@ class Financial
     }
 
     // Calculates the first derivation
-    private static function irrResultDeriv($values, $dates, $rate)
+    private static function irrResultDeriv(array $values, array $dates, float $rate): float
     {
         self::init();
 
@@ -358,7 +324,7 @@ class Financial
      *
      * @return float
      */
-    public function calculatePMT($apr, int $term, $loan): float
+    public function calculatePMT(float $apr, int $term, float $loan): float
     {
         $term = $term * 12;
         $apr = $apr / 1200;
@@ -366,5 +332,10 @@ class Financial
 
         return round($amount);
 
+    }
+
+    private static function convertToString(float $s): string
+    {
+        return sprintf('%.' . self::SCALE . 'f', $s);
     }
 }

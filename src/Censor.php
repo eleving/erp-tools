@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Tool;
 
 class Censor
@@ -8,7 +10,7 @@ class Censor
      * @param mixed $value
      * @return string|null
      */
-    public static function censure($value)
+    public static function censure($value): ?string
     {
         if ($value === null) {
             return $value;

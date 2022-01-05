@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Common\Tool;
 
 /**
@@ -33,7 +35,7 @@ class FtpSimpleClient
     /**
      * @var string $error Default exception error message mask
      */
-    protected $error = 'FTP Error: %s!';
+    protected string $error = 'FTP Error: %s!';
 
     /**
      * @var resource $conn Connection with the server
@@ -47,7 +49,7 @@ class FtpSimpleClient
      * @param boolean $ignore_user_abort Ignore user abort, true by default
      * @throws \Exception If ftp extension is not loaded.
      */
-    public function __construct($ignore_user_abort = true)
+    public function __construct(bool $ignore_user_abort = true)
     {
         if (!extension_loaded('ftp')) {
             throw new \Exception(sprintf($this->error, 'FTP extension is not loaded'));
