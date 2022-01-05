@@ -159,6 +159,7 @@ class NumberTool
         }
 
         $half = 0.5 / (10 ** $precision);
+
         return number_format(round($val - $half, $precision), $precision, '.', '');
     }
 
@@ -243,7 +244,7 @@ class NumberTool
 
     public static function isNullOrZero($number): bool
     {
-        return null === $number || self::isZero($number);
+        return is_null($number) || self::isZero($number);
     }
 
     public static function isZero($number): bool
@@ -254,12 +255,8 @@ class NumberTool
     /**
      * Performs addition to all passed arguments
      * NumberTool::add('1.00', '2.00', '3.00') //6.00
-     * @param string $op1
-     * @param string $op2
-     * @param boolean $round
-     * @return string
      */
-    public static function addAll(...$args): string
+    public static function addAll(string ...$args): string
     {
         $res = '0.00';
         foreach (func_get_args() as $arg) {
@@ -335,7 +332,7 @@ class NumberTool
      * @param float $loan
      *   The loan amount.
      *
-     * @return float
+     * @return string
      *   The monthly mortgage amount.
      */
     public static function pmt(float $apr, int $term, float $loan): string
@@ -390,7 +387,7 @@ class NumberTool
         return $round ? self::round($average) : $average;
     }
 
-    public static function numberToText($number, string $locale = null)
+    public static function numberToText(string $number, string $locale = null)
     {
         if (!$locale) {
             $locale = 'en';
@@ -427,12 +424,12 @@ class NumberTool
     /**
      * @param float|int $total
      * @param float|int $partial
-     * @return float|int
+     * @return string
      */
-    public static function getPercentageBetweenTwo($total, $partial)
+    public static function getPercentageBetweenTwo($total, $partial): string
     {
         if (0 == $partial) {
-            return 0;
+            return '0';
         }
 
         return number_format(($partial / $total) * 100, 2);
@@ -528,7 +525,7 @@ class NumberTool
      * @param mixed $s
      * @return string
      */
-    private static function f(string $s): string
+    private static function f($s): string
     {
         return sprintf('%.' . self::SCALE . 'f', $s);
     }
