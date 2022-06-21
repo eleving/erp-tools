@@ -99,7 +99,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectSubtraction($a, $b, $expectedResult, $round = true)
     {
         $actualResult = NumberTool::sub($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -125,7 +125,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectMultiplication($a, $b, $expectedResult, $round = true)
     {
         $actualResult = NumberTool::mul($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -164,7 +164,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectDivision($a, $b, $expectedResult, $round = true)
     {
         $actualResult = NumberTool::div($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -186,7 +186,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectPower($a, $b, $expectedResult, $round = true)
     {
         $actualResult = NumberTool::pow($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -210,7 +210,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectTruncate($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::truncate($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -234,7 +234,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectAbs($a, $expectedResult)
     {
         $actualResult = NumberTool::abs($a);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -260,7 +260,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectRound($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::round($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -287,7 +287,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectFormat($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::format($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -316,7 +316,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectRoundDown($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::roundDown($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -340,7 +340,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectFloor($a, $expectedResult)
     {
         $actualResult = NumberTool::floor($a);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -367,7 +367,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectRoundCustom($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::roundCustom($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -390,7 +390,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectPercent($a, $b, $round, $expectedResult)
     {
         $actualResult = NumberTool::percent($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -412,7 +412,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectAddPercent($a, $b, $round, $expectedResult)
     {
         $actualResult = NumberTool::addPercent($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -434,7 +434,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectBeforePercentAddition($a, $b, $round, $expectedResult)
     {
         $actualResult = NumberTool::beforePercentAddition($a, $b, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -455,7 +455,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectAddVat($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::addVat($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -476,7 +476,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectRemoveVat($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::removeVat($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -495,7 +495,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectVatAmount($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::vatAmount($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -518,7 +518,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectIsNullOrZero($a, $expectedResult)
     {
         $actualResult = NumberTool::isNullOrZero($a);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -541,7 +541,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectIsZero($a, $expectedResult)
     {
         $actualResult = NumberTool::isZero($a);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -566,7 +566,7 @@ class NumberToolTest extends TestCase
         } else {
             $actualResult = NumberTool::addAll($a);
         }
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -590,7 +590,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectGt($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::gt($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -615,7 +615,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectGte($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::gte($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -639,7 +639,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectLt($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::lt($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -663,7 +663,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectLte($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::lte($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -684,15 +684,15 @@ class NumberToolTest extends TestCase
     public function strictCorrectEq($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::eq($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
     public function strictCorrectPmtProvider()
     {
         return [
-            ['30', '36', '10000', 424.52],
-            ['15', '46', '10000', 287.17],
+            ['30', '36', '10000', '424.52'],
+            ['15', '46', '10000', '287.17'],
             // TODO if $apr is greater than $term it dies
         ];
     }
@@ -704,7 +704,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectPmt($apr, $term, $loan, $expectedResult)
     {
         $actualResult = NumberTool::pmt($apr, $term, $loan);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -712,9 +712,9 @@ class NumberToolTest extends TestCase
     {
         return [
             [['30'], true, '30.00'],
-            [['30', 31], false, 30.5],
-            [['30', 32], false, 31],
-            [['30', 32, 1000, 3400000], false, 516],
+            [['30', 31], false, '30.5'],
+            [['30', 32], false, '31'],
+            [['30', 32, 1000, 3400000], false, '516'],
             [['30', '36', '10000'], true, '36.00'],
             [['15', '46', '10000'], true, '46.00'],
             [['15', '46', '10000'], false, '46'],
@@ -729,7 +729,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectCalculateMedian($values, $round, $expectedResult)
     {
         $actualResult = NumberTool::calculateMedian($values, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -737,11 +737,11 @@ class NumberToolTest extends TestCase
     {
         return [
             [['30'], true, '30.00'],
-            [['30', 31], false, 30.5],
-            [['30', 32], false, 31],
+            [['30', 31], false, '30.5'],
+            [['30', 32], false, '31'],
             [['30', '36'], true, '33.00'],
             [['15', '46'], true, '30.50'],
-            [['14', '46', '30'], false, 30],
+            [['14', '46', '30'], false, '30'],
             [['15', '46', '10000', 10, 15, 23, 56, 67, 68, 79, 14, 56, 89], true, '810.62'],
         ];
     }
@@ -753,7 +753,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectCalculateAverage($values, $round, $expectedResult)
     {
         $actualResult = NumberTool::calculateAverage($values, $round);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -779,7 +779,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectNumberToText($a, $b,  $expectedResult)
     {
         $actualResult = NumberTool::numberToText($a, $b);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -800,7 +800,7 @@ class NumberToolTest extends TestCase
     public function strictCorrectGetRoundedValueAndDifference($a, $expectedResult)
     {
         $actualResult = NumberTool::getRoundedValueAndDifference($a);
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 
 
@@ -814,11 +814,11 @@ class NumberToolTest extends TestCase
             ['25', '0.25', '1.00'],
             ['-45', '0.25', '-0.56'],
             ['-50', '-0.1', '0.20'],
-            ['-50', '0', 0],
-            ['-51', '0.0', 0],
-            ['-52', '0.00', 0],
-            ['-53', '', 0],
-            ['-54', null, 0],
+            ['-50', '0', '0'],
+            ['-51', '0.0', '0'],
+            ['-52', '0.00', '0'],
+            ['-53', '', '0'],
+            ['-54', null, '0'],
         ];
     }
 
@@ -829,72 +829,6 @@ class NumberToolTest extends TestCase
     public function strictCorrectGetPercentageBetweenTwo($a, $b, $expectedResult)
     {
         $actualResult = NumberTool::getPercentageBetweenTwo($a, $b);
-        self::assertSame($actualResult, $expectedResult);
-    }
-
-
-    public function strictCorrectResultProvider()
-    {
-        return [
-            ['30', '30'],
-            ['1>2', ''],
-            ['1<2', '1'],
-            ['1<=2', '1'],
-            ['2<=2', '1'],
-            ['2==2', '1'],
-            ['2=2', '1'],
-            ['2>2', ''],
-            ['2>=2', '1'],
-            ['2<>2', ''],
-            ['2<12', '1'],
-            ['10%2', '0.0000000000'],
-            ['5%2', '1.0000000000'],
-            ['2!=2', ''],
-            ['2!=1', '1'],
-            ['30+123', '153.0000000000'],
-            ['(30+123)/3', '51.0000000000'],
-            ['(30+123)*.5', '76.5000000000'],
-            ['(30+123)*.5-6.5', '70.0000000000'],
-            ['(6.99999999999)^2', '48.9999999998'],
-            ['6.99999999999^2', '48.9999999998'],
-            ['7^2', '49'],
-
-            [['$1+$2', '12', '13'], '25.0000000000'],
-            [['($1+$2)+$3', '12', '13', '1'], '26.0000000000'],
-            // TODO weird case
-            // exceeds the 10 number after point rule and adds some sort of numbers
-            [['($1+$2-$3*$4)^$5', '12', '13', '4', '5', '2'], '25.0000000000400'],
-
-            // TODO weird case
-            // Seems to ignore ()
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '0'], '25.00000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '1'], '5.0000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '2'], '-15.0000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '3'], '-35.0000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '4'], '-55.0000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '5'], '-75.0000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '6'], '-95.0000000000'],
-            [['($1+$2-$3*$4)*$5', '12', '13', '4', '5', '7'], '-115.0000000000'],
-
-            [['((($1+$2)+$3)+$4)+$5', '12', '13', '4', '5', '7'], '41.0000000000'],
-            // TODO in regards to the comment in NumberTool line 449
-            [['((($1+    $2)+     $3)+$4)   +$5', '12', '13', '4', '5', '7'], '41.0000000000'],
-
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider strictCorrectResultProvider
-     */
-    public function strictCorrectResult($a, $expectedResult)
-    {
-        if (is_array($a)) {
-            $nt = new NumberTool();
-            $actualResult = call_user_func_array([$nt, 'result'], $a);
-        } else {
-            $actualResult = NumberTool::result($a);
-        }
-        self::assertSame($actualResult, $expectedResult);
+        self::assertSame($expectedResult, $actualResult);
     }
 }

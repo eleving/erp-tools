@@ -166,14 +166,14 @@ class StringTool
         return $back;
     }
 
-    public static function toLower($string)
+    public static function toLower($string): string
     {
         mb_internal_encoding('UTF-8');
 
         return mb_strtolower($string);
     }
 
-    public static function toUpper($string)
+    public static function toUpper($string): string
     {
         mb_internal_encoding('UTF-8');
 
