@@ -30,11 +30,11 @@ class XML2Array
 
     /**
      * Initialize the root XML node [optional]
-     * @param $version
-     * @param $encoding
-     * @param $format_output
+     * @param string $version
+     * @param string $encoding
+     * @param bool $format_output
      */
-    public static function init($version = '1.0', $encoding = 'UTF-8', $format_output = true)
+    public static function init(string $version = '1.0', string $encoding = 'UTF-8', $format_output = true)
     {
         self::$xml = new DOMDocument($version, $encoding);
         self::$xml->formatOutput = $format_output;

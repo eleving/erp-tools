@@ -7,7 +7,7 @@ class DateTool
 
     public static function convertToDate(\DateTimeInterface $d): \DateTime
     {
-        return (new \DateTime)->createFromFormat('Ymd', $d->format('Ymd'))->setTime(0, 0, 0);
+        return \DateTime::createFromFormat('Ymd', $d->format('Ymd'))->setTime(0, 0, 0);
     }
 
     public static function greaterDate(\DateTimeInterface $d1, \DateTimeInterface $d2): bool
@@ -65,9 +65,9 @@ class DateTool
      * Add months _without overlapping_
      * 31/01 + 1 month = 28/02
      *
-     * @param \DateTimeInterface $date
+     * @param \DateTime $date
      * @param int $months
-     * @return \DateTimeInterface
+     * @return \DateTime
      */
     public static function addMonths(\DateTime $date, int $months): \DateTime
     {

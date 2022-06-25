@@ -105,7 +105,7 @@ class StringTool
         $message = trim($message);
         $message = Transliterator::unaccent($message, $transliterateCyrillic);
 
-        return self::convertAscii($message, $transliterateCyrillic);
+        return self::convertAscii($message);
     }     
 
     public static function getArrayWithRemovedPrefixRecursive(array $input, $prefix)
@@ -215,10 +215,10 @@ class StringTool
     }
 
     /**
-     * @param $length
+     * @param int $length
      * @return string
      */
-    public static function password($length = 8)
+    public static function password(int $length = 8): string
     {
         if ($length < 8) {
             throw new \InvalidArgumentException('Length must be more than 7');
@@ -243,10 +243,8 @@ class StringTool
 
     /**
      * Transliterates polish chars to latin char equivalents
-     * @param $string
-     * @return mixed
      */
-    public static function polishToLatin($string)
+    public static function polishToLatin(string $string): string
     {
         $polishChars = ['Ą','Ć','Ę','Ł','Ó','Ś','Ź','Ż','Ń','ą','ć','ę','ł','ó','ś','ź','ż','ń'];
         $latinChars = ['A','C','E','L','O','S','Z','Z','N','a','c','e','l','o','s','z','z','n'];
@@ -267,10 +265,10 @@ class StringTool
      * '2.00' -> '2.00'
      * '2,000€' -> '2000.00'
      *
-     * @param $price
+     * @param string $price
      * @return string
      */
-    public static function cleanupPriceString($price)
+    public static function cleanupPriceString(string $price): string
     {
         $price = preg_replace('/[^0-9\.,]+/', '', $price);
         $commaPosition = strpos($price, ',');

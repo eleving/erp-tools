@@ -142,14 +142,10 @@ class NumberTool
 
     /**
      * Formats number to decimal
-     *
-     * @param string $val
-     * @param integer $precision
-     * @return string
      */
-    public static function format($val, $precision = 2): string
+    public static function format($val, int $precision = 2): string
     {
-        return number_format($val, $precision, '.', '');
+        return number_format((float)$val, $precision, '.', '');
     }
 
     /**
@@ -261,9 +257,6 @@ class NumberTool
     /**
      * Performs addition to all passed arguments
      * NumberTool::add('1.00', '2.00', '3.00') //6.00
-     * @param string $op1
-     * @param string $op2
-     * @param boolean $round
      * @return string
      */
     public static function addAll(): string
@@ -432,16 +425,17 @@ class NumberTool
     }
 
     /**
-     * @param float|int $total
-     * @param float|int $partial
+     * @param string $total
+     * @param string $partial
      * @return string
      */
-    public static function getPercentageBetweenTwo($total, $partial): string
+    public static function getPercentageBetweenTwo(string $total, string $partial): string
     {
-        if (0 == $partial) {
-            return '0';
+        if ('' === $partial) {
+            return '0.00';
         }
 
-        return number_format(($partial / $total) * 100, 2);
+
+        return number_format(((float)$partial / (float)$total) * 100, 2);
     }
 }
