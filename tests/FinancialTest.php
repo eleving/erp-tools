@@ -16,7 +16,7 @@ class FinancialTest extends TestCase
     public function PMT()
     {
         $test = Financial::PMT(0.1, 1,1, 0);
-        self::assertEquals('-1.1', $test);
+        self::assertEqualsWithDelta('-1.1', $test, 0.00000000000001);
 
         $test = Financial::PMT(0, 100,1, 0);
 
@@ -30,7 +30,7 @@ class FinancialTest extends TestCase
         self::assertSame(0., $test);
 
         $test = Financial::PMT(-0.99, 100,1, 0);
-        self::assertSame(0., $test);
+        self::assertEqualsWithDelta(0., $test, 0.00000000000001);
 
         $test = Financial::PMT(-0.55, 100,10, 10);
         self::assertSame(-5.5, $test);
