@@ -2,6 +2,10 @@
 
 namespace Common\Tool;
 
+use DivisionByZeroError;
+use PHPUnit\Framework\Error\Warning;
+use RuntimeException;
+
 /**
  * Utility for financial calculations
  */
@@ -70,7 +74,11 @@ class NumberTool
      */
     public static function div($op1, $op2, $round = true): ?string
     {
-        $res = bcdiv(self::f($op1), self::f($op2), self::SCALE);
+        try {
+            $res = bcdiv(self::f($op1), self::f($op2), self::SCALE);
+        } catch (DivisionByZeroError|RuntimeException $_) {
+            $res = null;
+        }
         return $round ? self::round($res) : $res;
     }
 
@@ -228,7 +236,12 @@ class NumberTool
     public static function beforePercentAddition($result, $percentage, $round = true): string
     {
         // ($result / ($percentage + 100)) * 100;
-        $res = bcmul(bcdiv($result, bcadd($percentage, '100', self::SCALE), self::SCALE), '100', self::SCALE);
+        try {
+            $div = bcdiv($result, bcadd($percentage, '100', self::SCALE), self::SCALE);
+        } catch (DivisionByZeroError|RuntimeException $_) {
+            $div = null;
+        }
+        $res = bcmul($div, '100', self::SCALE);
         return $round ? self::round($res) : $res;
     }
 
@@ -438,10 +451,10 @@ class NumberTool
      */
     public static function getPercentageBetweenTwo($total, $partial): string
     {
-        if (0 == $partial) {
+        if (!(float)$partial) {
             return '0';
         }
 
-        return number_format(($partial / $total) * 100, 2);
+        return number_format(((float)$partial / (float)$total) * 100, 2);
     }
 }
