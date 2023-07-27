@@ -63,6 +63,14 @@ class Financial
         return (((1 + $rate) ** $nper) - 1) / $rate;
     }
 
+    /**
+     * @param $pv
+     * @param $pmt
+     * @param $rate
+     * @param $period
+     *
+     * @return mixed
+     */
     private static function interestPart($pv, $pmt, $rate, $period)
     {
         self::init();
