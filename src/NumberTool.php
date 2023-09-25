@@ -20,6 +20,10 @@ class NumberTool
      */
     private static function f($s): string
     {
+        if (is_numeric($s) && !is_float($s)) {
+            return bcmul(trim($s), '1', self::SCALE);
+        }
+
         return sprintf('%.' . self::SCALE . 'f', $s);
     }
     /**
