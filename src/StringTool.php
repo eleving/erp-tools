@@ -173,9 +173,13 @@ class StringTool
         return mb_strtolower($string);
     }
 
-    public static function toUpper($string): string
+    public static function toUpper(?string $string): string
     {
         mb_internal_encoding('UTF-8');
+
+        if($string === null) {
+            return '';
+        }
 
         return mb_strtoupper($string);
     }
